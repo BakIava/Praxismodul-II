@@ -1,0 +1,33 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<!-- HEADER -->
+
+<mat-toolbar class="header">
+  <button class="menu-button" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu Button">
+    <mat-icon>menu</mat-icon>
+    <!-- <mat-icon>more_vert</mat-icon> -->
+  </button>
+  <mat-menu #menu="matMenu">
+    <button *ngFor="let menuItem of menuItems" mat-menu-item (click)="navigate(menuItem.path)">
+      <mat-icon>{{menuItem.icon}}</mat-icon>
+      <span>{{menuItem.text}}</span>
+    </button>
+  </mat-menu>
+  <div class="spacer2"></div>
+  <div class="spacer1"></div>
+  <img class="logo" src="../assets/car_13260.png">
+  <div class="spacer2"></div>
+  <span>Fuhrparkmanagement System</span>
+</mat-toolbar>
+
+<!-- CONTENT -->
+
+<div class="content">
+  <router-outlet></router-outlet>
+</div>
+
+<!-- FOOTER -->
+
+<div class="footer">
+  <!-- <img id="car" src="../assets/car.png">   -->
+</div>

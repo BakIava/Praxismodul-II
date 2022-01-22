@@ -18,7 +18,8 @@ export class AppComponent {
 
   menuItems: MenuItem[] = [
     { icon: 'home', text: 'Home', path: '' },
-    { icon: 'description', text: 'Anfragen', path: 'requests' }
+    { icon: 'description', text: 'Anfragen', path: 'requests' },    
+    { icon: 'description', text: 'Anfrage erstellen', path: 'create-request' },
   ]
   constructor(private router: Router) { }
 

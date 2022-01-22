@@ -20,13 +20,19 @@ import {MatTableDataSource} from '@angular/material/table';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {MatMenuModule} from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { CreateRequestComponent } from './create-request/create-request.component';
+import {MatSelectModule} from '@angular/material/select'; 
+import {MatDatepickerModule} from '@angular/material/datepicker'; 
+// import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { MatNativeDateModule } from '@angular/material/core';
 // import { CarTableComponent } from './main/car-table/car-table.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    MainComponent
+    MainComponent,
+    CreateRequestComponent
     // CarTableComponent
   ],
   imports: [
@@ -44,7 +50,11 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     FormsModule,
     FontAwesomeModule,
     MatMenuModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    // MatMomentDateModule,
+    MatNativeDateModule
     // MatPaginator,
     // MatTableDataSource
   ],

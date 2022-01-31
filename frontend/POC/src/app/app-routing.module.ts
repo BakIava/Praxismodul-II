@@ -4,6 +4,7 @@ import { AppComponent } from './app.component';
 import { CreateRequestComponent } from './create-request/create-request.component';
 import { LoginComponent } from './login/login.component';
 import { MainComponent } from './main/main.component';
+import { RequestsComponent } from './requests/requests.component';
 
 const routes: Routes = [
   {
@@ -13,6 +14,10 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'requests',
+    component: RequestsComponent
   },
   {
     path: 'create-request',

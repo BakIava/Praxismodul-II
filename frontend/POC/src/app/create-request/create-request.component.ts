@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../services/api/api.service';
+import { SnackbarService } from '../services/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-create-request',
@@ -8,38 +9,43 @@ import { ApiService } from '../services/api/api.service';
 })
 export class CreateRequestComponent implements OnInit {
 
-  constructor(private api: ApiService) { }
+  constructor(private api: ApiService, private snackbar: SnackbarService) { }
 
   ngOnInit() {
   }
 
-  approvers = [
-    { id: 0, displayName: 'Tanja Nagel' },
-    { id: 1, displayName: 'Sebastian Bumgarner' },
-    { id: 2, displayName: 'Daniela Dresdner' },
-    { id: 3, displayName: 'Torsten Zimmermann' }
+  carStates = [
+    { id: 0, displayName: 'Neuwagen' },
+    { id: 1, displayName: 'Gebrauchtwagen' },
   ]
 
-  carmodels = [
-    { model: 'audi_t1', displayName: 'Audi Super V2 T1' },
-    { model: 'audi_t2', displayName: 'Audi Turbo V3 T2' }
+  fuels = [
+    { id: 0, displayName: 'Benzin' },
+    { id: 1, displayName: 'Diesel' },
+    { id: 2, displayName: 'Elektro' },
+    { id: 3, displayName: 'Hybrid' },
+    { id: 4, displayName: 'Wasserstoff' },
   ]
 
   request = {
     id: '00-59523-1',
-    budget: 100000,
-    user: 'Benjamin Krause',
-    approver: -1,
-    status: 'New',
+    budget: 100000 ,
+    manufacturer: '',
+    fuel: 0,
+    cubicCapacity: '',
     carmodel: '',
-    approvalStatus: 'Anfrage wurde nicht erstellt',
-    description: '',
-    date: new Date()
+    carState: 0,
+    message: '',
+    date: new Date(),
+    fuelCard: true,
+    grossPrice: 100,
+    employee: 'Mustermann'
   }
 
   async createRequest() {
     await this.api.createRequest(this.request, {}).then(response => {
       console.log(response);      
+      this.snackbar.open("Anfrage wurde erstellt")
     }).catch(error => {
       console.log(error);
     });

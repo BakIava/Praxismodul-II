@@ -4,3 +4,14 @@
 // html{
 //      background-color: #303030;
 // }
+
+
+/* Snack Bar */
+
+.snackbar-success {
+    background-color: green;
+
+    .mat-button-wrapper {
+        color: lightgreen;
+    }
+  }

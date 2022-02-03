@@ -3,13 +3,20 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ApiService } from '../services/api/api.service';
+import { SnackbarService } from '../services/snackbar/snackbar.service';
+import {MatDialog} from '@angular/material/dialog';
+import { RequestDetailsComponent } from './request-details/request-details.component';
 
 export interface Request {
   id: string;
-  status: string;
-  assigned_to: string;
-  car: string;
+  employee: string;
+  manufacturer: string;
+  carmodel: string;
+  grossPrice: number;
   budget: number;
+  date: Date;
+  fuelCard: boolean;
+  carState: string;
 }
 
 @Component({
@@ -17,8 +24,31 @@ export interface Request {
   templateUrl: './requests.component.html',
   styleUrls: ['./requests.component.scss']
 })
-export class RequestsComponent implements AfterViewInit  {
-  displayedColumns: string[] = ['id', 'status', 'assigned_to', 'car', 'budget'];
+export class RequestsComponent implements AfterViewInit {
+  columKeys: string[] = [
+    'id',
+    'employee',
+    'manufacturer',
+    'carmodel',
+    'grossPrice',
+    'budget',
+    'date',
+    'fuelCard',
+    'carState',
+  ];
+
+  columDisplays: { [key: string]: string } = {
+    'id': 'Anfrage-ID',
+    'employee': 'Mitarbeiter',
+    'manufacturer': 'Hersteller',
+    'carmodel': 'Modell',
+    'grossPrice': 'Bruttolistenpreis',
+    'budget': 'Budget',
+    'date': 'Bruttolistenpreis',
+    'fuelCard': 'Tankkarte',
+    'carState': 'Neuwagen?'
+  }
+
   dataSource!: MatTableDataSource<Request>;
 
   @ViewChild(MatPaginator)
@@ -26,18 +56,18 @@ export class RequestsComponent implements AfterViewInit  {
   @ViewChild(MatSort)
   sort!: MatSort;
 
-  constructor(private api: ApiService) {    
-    this.api.getRequests({ 'Authorization': ''}).then(requests => {
+  constructor(private api: ApiService, private snachbar: SnackbarService, public dialog: MatDialog) {
+    this.api.getRequests({ 'Authorization': '' }).then(requests => {
       this.dataSource.data = requests;
     }).catch(error => {
-      console.log(error);      
+      console.log(error);
     });
 
     this.dataSource = new MatTableDataSource();
   }
 
   ngAfterViewInit() {
-    if(this.paginator != undefined && this.sort != undefined) {      
+    if (this.paginator != undefined && this.sort != undefined) {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     }
@@ -50,5 +80,14 @@ export class RequestsComponent implements AfterViewInit  {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  openRequest(request: any) {
+    const dialogRef = this.dialog.open(RequestDetailsComponent, {
+      data: request
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.snachbar.open("Nice");
+    });
   }
 }

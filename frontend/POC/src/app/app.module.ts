@@ -28,6 +28,11 @@ import { RequestsComponent } from './requests/requests.component';
 import { MatTableModule } from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSortModule} from '@angular/material/sort';
+import {MatCheckboxModule} from '@angular/material/checkbox'; 
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatDialogModule} from '@angular/material/dialog'; 
+import { RequestDetailsComponent } from './requests/request-details/request-details.component';
+import { AcceptComponent } from './requests/request-details/accept/accept.component'; 
 
 
 @NgModule({
@@ -36,7 +41,9 @@ import {MatSortModule} from '@angular/material/sort';
     LoginComponent,
     MainComponent,
     CreateRequestComponent,
-    RequestsComponent
+    RequestsComponent,
+    RequestDetailsComponent,
+    AcceptComponent
   ],
   imports: [
     BrowserModule,
@@ -61,7 +68,10 @@ import {MatSortModule} from '@angular/material/sort';
     HttpClientModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    MatCheckboxModule,
+    MatSnackBarModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

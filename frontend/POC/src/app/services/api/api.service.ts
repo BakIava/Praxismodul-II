@@ -21,4 +21,8 @@ export class ApiService {
   getRequests(headers: any) {
     return this.http.get<any>(baseUrl + '/requests', { headers: headers }).toPromise();
   }
+
+  getRequest(headers: any) {
+    return this.http.get<any>(baseUrl + '/request', { headers: headers }).toPromise();
+  }
 }

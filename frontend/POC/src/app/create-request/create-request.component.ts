@@ -1,23 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../services/api/api.service';
 import { SnackbarService } from '../services/snackbar/snackbar.service';
-
-export class Request {
-  constructor(
-    public id: string = '',
-    public budget: number = 110000,
-    public manufacturer: string = '',
-    public fuel: number = 0,
-    public cubicCapacity: number = 0,
-    public carmodel: string = '',
-    public carState: number = 0,
-    public message: string = '',
-    public date: Date = new Date(),
-    public fuelCard: boolean = false,
-    public grossPrice: number = 100,
-    public employee: string = 'Mustermann') { }
-}
-
+import { Request } from '../Model/Request';
 
 @Component({
   selector: 'app-create-request',
@@ -29,7 +13,19 @@ export class CreateRequestComponent implements OnInit {
   constructor(private api: ApiService, private snackbar: SnackbarService) { }
 
   ngOnInit() {
-  }
+    this.checkRequests();
+    }
+
+    async checkRequests() {
+      var token = localStorage.getItem('AccessToken');
+      await this.api.getRequest({Authorization: token }).then(response => {
+        if(response) {
+          this.snackbar.open("User has already Request")
+        }
+      }).catch(error => {
+
+      })
+    }
 
   carStates = [
     { id: 0, displayName: 'Neuwagen' },
@@ -51,6 +47,8 @@ export class CreateRequestComponent implements OnInit {
       this.snackbar.open("Angebot anhängen")
       return;
     }
+
+    this.request.employee = localStorage.getItem("AccessToken") || "" ;
 
     await this.api.createRequest(this.request, { }).then(async response => {
       this.request.id = response;

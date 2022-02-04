@@ -20,6 +20,7 @@ export class AppComponent {
     { icon: 'home', text: 'Home', path: '' },
     { icon: 'description', text: 'Anfragen', path: 'requests' },    
     { icon: 'description', text: 'Anfrage erstellen', path: 'create-request' },
+    { icon: 'description', text: 'Meine Anfrage', path: 'my-request' },
   ]
   constructor(private router: Router) { }
 

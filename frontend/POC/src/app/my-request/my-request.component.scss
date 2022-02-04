@@ -1,0 +1,20 @@
+
+
+.file-input {
+    display: none;
+  }
+
+  .gross-price-input, .budget-input {
+    text-align: right;
+  }
+  
+  .gross-price input.example-right-align::-webkit-outer-spin-button,
+  .gross-price input.example-right-align::-webkit-inner-spin-button,
+  .budget input.example-right-align::-webkit-outer-spin-button,
+  .budget input.example-right-align::-webkit-inner-spin-button  {
+    display: none;
+  }
+  
+  .gross-price input.example-right-align, .budget input.example-right-align {
+    -moz-appearance: textfield;
+  }

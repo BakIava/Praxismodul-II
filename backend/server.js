@@ -48,6 +48,19 @@ app.post('/requests', async (req, res) => {
     res.end();
 });
 
+app.get('/request', async (req, res) => {
+    var token = req.headers['authorization'];
+
+    console.log(token);
+    const collectionName = 'requests';
+    const collection = db.collection(collectionName);
+    var request = await collection.find({employee: token}).toArray();
+    console.log(request);
+    res.write(JSON.stringify(request[0]))
+    res.statusCode = 200;
+    res.end();
+})
+
 app.post('/offer', async (req, res) => {
     debugger;
     try {

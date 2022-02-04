@@ -34,6 +34,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { RequestDetailsComponent } from './requests/request-details/request-details.component';
 import { AcceptComponent } from './requests/request-details/accept/accept.component'; 
 import {MatRadioModule} from '@angular/material/radio';
+import { MyRequestComponent } from './my-request/my-request.component';
 
 
 
@@ -45,7 +46,8 @@ import {MatRadioModule} from '@angular/material/radio';
     CreateRequestComponent,
     RequestsComponent,
     RequestDetailsComponent,
-    AcceptComponent
+    AcceptComponent,
+    MyRequestComponent
   ],
   imports: [
     BrowserModule,

@@ -33,9 +33,13 @@ export class LoginComponent implements OnInit {
   {    
     console.log("username:" + this.username + "; password:" + this.password);
 
-    if(this.username == "test" && this.password == "test")
+    if(this.username == "test1" && this.password == "test1")
     {
-      localStorage.setItem('AccessToken', 'login')
+      localStorage.setItem('AccessToken', 'user1')
+      this.router.navigate(['']);
+    } else  if(this.username == "test2" && this.password == "test2")
+    {
+      localStorage.setItem('AccessToken', 'user2')
       this.router.navigate(['']);
     }
   }

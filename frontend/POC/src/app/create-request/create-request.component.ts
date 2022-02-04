@@ -2,10 +2,27 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../services/api/api.service';
 import { SnackbarService } from '../services/snackbar/snackbar.service';
 
+export class Request {
+  constructor(
+    public id: string = '',
+    public budget: number = 110000,
+    public manufacturer: string = '',
+    public fuel: number = 0,
+    public cubicCapacity: number = 0,
+    public carmodel: string = '',
+    public carState: number = 0,
+    public message: string = '',
+    public date: Date = new Date(),
+    public fuelCard: boolean = false,
+    public grossPrice: number = 100,
+    public employee: string = 'Mustermann') { }
+}
+
+
 @Component({
   selector: 'app-create-request',
   templateUrl: './create-request.component.html',
-  styleUrls: ['./create-request.component.scss']
+  styleUrls: ['./create-request.component.css']
 })
 export class CreateRequestComponent implements OnInit {
 
@@ -27,27 +44,50 @@ export class CreateRequestComponent implements OnInit {
     { id: 4, displayName: 'Wasserstoff' },
   ]
 
-  request = {
-    id: '00-59523-1',
-    budget: 100000 ,
-    manufacturer: '',
-    fuel: 0,
-    cubicCapacity: '',
-    carmodel: '',
-    carState: 0,
-    message: '',
-    date: new Date(),
-    fuelCard: true,
-    grossPrice: 100,
-    employee: 'Mustermann'
-  }
+  request = new Request();
 
   async createRequest() {
-    await this.api.createRequest(this.request, {}).then(response => {
-      console.log(response);      
-      this.snackbar.open("Anfrage wurde erstellt")
+    if(this.file == null) {
+      this.snackbar.open("Angebot anhängen")
+      return;
+    }
+
+    await this.api.createRequest(this.request, { }).then(async response => {
+      this.request.id = response;
+      const formData = new FormData();  
+      formData.append("offer", this.file);
+      formData.append("id", this.request.id);
+      await this.api.uploadOffer(formData, {});
+
+      this.snackbar.open("Anfrage wurde unter folgender ID erstellt: " + this.request.id, "Verstanden", 10000)
     }).catch(error => {
       console.log(error);
     });
+  }
+
+  file: any = null;
+  fileName = '';
+
+  onFileSelected(event: any) {
+
+    const file: File = event.target.files[0];
+
+    if (file) {
+      this.fileName = file.name;
+      this.file = file;
+      console.log(file);
+
+      // const formData = new FormData();
+
+      // formData.append("thumbnail", file);
+
+      // const upload$ = this.http.post("/api/thumbnail-upload", formData);
+
+      // upload$.subscribe();
+    }
+  }
+
+  test() {
+    this.snackbar.open("Test")
   }
 }

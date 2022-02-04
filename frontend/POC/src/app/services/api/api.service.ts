@@ -10,10 +10,12 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
-  createRequest(body: any, headers: any) {
-    console.log(body);
-    
+  createRequest(body: any, headers: any) {    
     return this.http.post<any>(baseUrl + '/requests', body, { headers: headers }).toPromise();
+  }
+
+  uploadOffer(body: any, headers: any) {    
+    return this.http.post<any>(baseUrl + '/offer', body, { headers: headers }).toPromise();
   }
 
   getRequests(headers: any) {

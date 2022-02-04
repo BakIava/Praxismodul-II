@@ -1,0 +1,51 @@
+mat-card {
+    margin: 10px;
+}
+
+table {
+    width: 50%;
+    margin-left: 25%;
+}
+
+td {
+    padding: 5px;
+}
+
+mat-label {
+    color: white;
+}
+
+input {
+    color: white;
+}
+
+/deep/ .mat-select-value{
+  color: white;
+}
+
+.file-input {
+  display: none;
+}
+
+mat-form-field {
+    width: 90%;
+    /* border: 2pt solid white;
+    border-radius: 5px; */
+    padding: 15px;
+    padding-bottom: 10px;
+}
+
+  .gross-price-input, .budget-input {
+    text-align: right;
+  }
+  
+  .gross-price input.example-right-align::-webkit-outer-spin-button,
+  .gross-price input.example-right-align::-webkit-inner-spin-button,
+  .budget input.example-right-align::-webkit-outer-spin-button,
+  .budget input.example-right-align::-webkit-inner-spin-button  {
+    display: none;
+  }
+  
+  .gross-price input.example-right-align, .budget input.example-right-align {
+    -moz-appearance: textfield;
+  }

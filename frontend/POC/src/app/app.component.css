@@ -9,11 +9,11 @@
     height: 65px;
     display: flex;
     align-items: center;
-    background-color:#1dc2cf;
+    background-color:rgb(60, 70, 82);
     font-weight: 600;
     font-family: 'Courier New', Courier, monospace;
     font-size: large;    
-    color: black;
+    color: rgb(255, 255, 255);
 }
 
 .header .spacer1 {
@@ -92,7 +92,7 @@
   top: 65px;
   left: 0;
   right: 0;
-  height: 88%;
+  height: 100%;
   /* border: 1pt black solid; */
 }
   /* .content-container {

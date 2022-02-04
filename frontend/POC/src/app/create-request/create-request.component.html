@@ -1,9 +1,9 @@
-<mat-card style="background-color: rgb(214, 205, 75);">
+<mat-card style="background-color: rgb(12, 124, 186);; width: 70%; margin: 20px; left: 12%; color: white;">
     <mat-card-title>Neue Anfrage</mat-card-title>
     <mat-card-subtitle></mat-card-subtitle>
     <mat-card-content>
         <form class="example-form">
-            <table>
+            <table style="margin-left: 17%;">
                 <tr>
                     <td>
                         <mat-form-field appearance="fill">
@@ -12,17 +12,11 @@
                         </mat-form-field>
                     </td>
                     <td class="right">
-                        <mat-form-field appearance="fill">
+                        <mat-form-field appearance="fill" class="budget">
                             <mat-label>Budget</mat-label>
-                            <input matInput disabled [(ngModel)]="request.budget" name="budget">
-                        </mat-form-field>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <mat-form-field appearance="fill">
-                            <mat-label>Hersteller</mat-label>
-                            <input matInput [(ngModel)]="request.manufacturer" name="user">
+                            <input class="budget-input" matInput disabled [(ngModel)]="request.budget" name="budget">
+                            <mat-icon matPrefix>euro_symbol</mat-icon>
+                            <span matSuffix style="color:rgb(7,76,113)">,00</span>
                         </mat-form-field>
                     </td>
                     <td class="right">
@@ -37,6 +31,12 @@
                 <tr>
                     <td>
                         <mat-form-field appearance="fill">
+                            <mat-label>Hersteller</mat-label>
+                            <input matInput [(ngModel)]="request.manufacturer" name="user">
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-form-field appearance="fill">
                             <mat-label>Modell</mat-label>
                             <input matInput [(ngModel)]="request.carmodel" name="status">
                         </mat-form-field>
@@ -49,10 +49,23 @@
                                     {{fuel.displayName}}
                                 </mat-option>
                             </mat-select>
+                            <mat-icon matSuffix>local_gas_station</mat-icon>
                         </mat-form-field>
                     </td>
                 </tr>
                 <tr>
+                </tr>
+                <tr>
+                    <td>
+                        <mat-form-field appearance="fill" class="gross-price">
+                            <mat-label>Bruttolistenpreis</mat-label>
+                            <input class="gross-price-input" matInput [(ngModel)]="request.grossPrice"
+                                name="grossPrice">
+                            <!-- <span matPrefix>$&nbsp;</span> -->
+                            <span matSuffix>,00</span>
+                            <mat-icon matPrefix>euro_symbol</mat-icon>
+                        </mat-form-field>
+                    </td>
                     <td>
                         <mat-form-field appearance="fill">
                             <mat-label>Neuwagen?</mat-label>
@@ -65,30 +78,46 @@
                     </td>
                     <td class="right">
                         <mat-form-field appearance="fill">
-                            <mat-label>Hubraum (cm³)</mat-label>
+                            <mat-label>Hubraum</mat-label>
                             <input matInput [(ngModel)]="request.cubicCapacity" name="cubicCapacity">
+                            <span matSuffix>cm³</span>
                         </mat-form-field>
                     </td>
                 </tr>
                 <tr>
-                    <td>
-                        <div style="padding: 20px 20px 20px 10px;">
-                            <p>Tankkarte vorhanden?</p>
-                            <mat-checkbox class="example-margin">Ja</mat-checkbox>
-                            <mat-checkbox class="example-margin">Nein</mat-checkbox>
-                        </div>
+                    <td colspan="2">
+                        <section>
+                            <label style="margin: 0 15px;">Tankkarte vorhanden?</label>
+                            <mat-radio-group [(ngModel)]="request.fuelCard" name="fuelCard">
+                                <mat-radio-button [value]=true style="margin-right: 10px;">Ja</mat-radio-button>
+                                <mat-radio-button [value]=false>Nein</mat-radio-button>
+                            </mat-radio-group>
+                        </section>
                     </td>
                     <td>
                         <div>
-                            <p>Angebot anhängen</p>
-                            <input type="file">
+                            <!-- <label style="margin: 0 20px;">Angebot anhängen</label>
+                            <br>
+                            <input type="file" style="padding-left:20px;" onchange="angular.element(this).scope().fileNameChanged(this)"> -->
+                            <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload>
+
+                            <div class="file-upload" style="margin: 0 20px;">
+
+                                {{fileName || "No file uploaded yet."}}
+
+                                <button mat-mini-fab style="background-color: white;" class="upload-btn" (click)="fileUpload.click()">
+                                    <mat-icon>attach_file</mat-icon>
+                                </button>
+                            </div>
                         </div>
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="2">
+                    <td colspan="3">
                         <mat-form-field appearance="fill" style="width: 95%">
-                            <mat-label>Nachricht</mat-label>
+                            <mat-label>
+                                <mat-icon>email</mat-icon> Nachricht
+                            </mat-label>
                             <textarea matInput [(ngModel)]="request.message" name="description"></textarea>
                         </mat-form-field>
                     </td>
@@ -96,8 +125,8 @@
             </table>
         </form>
     </mat-card-content>
-    <mat-card-actions>
-        <button mat-raised-button style="background-color: white; color: black;"
+    <mat-card-actions style="text-align: center;">
+        <button mat-raised-button style="background-color: rgb(204, 204, 204); color: black; width: 25%; "
             (click)="createRequest()">Erstellen</button>
     </mat-card-actions>
 </mat-card>

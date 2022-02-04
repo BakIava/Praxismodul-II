@@ -44,7 +44,7 @@ export class RequestsComponent implements AfterViewInit {
     'carmodel': 'Modell',
     'grossPrice': 'Bruttolistenpreis',
     'budget': 'Budget',
-    'date': 'Bruttolistenpreis',
+    'date': 'Anschaffungsdatum',
     'fuelCard': 'Tankkarte',
     'carState': 'Neuwagen?'
   }

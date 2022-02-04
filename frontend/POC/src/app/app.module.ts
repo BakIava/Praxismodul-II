@@ -33,6 +33,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatDialogModule} from '@angular/material/dialog'; 
 import { RequestDetailsComponent } from './requests/request-details/request-details.component';
 import { AcceptComponent } from './requests/request-details/accept/accept.component'; 
+import {MatRadioModule} from '@angular/material/radio';
+
 
 
 @NgModule({
@@ -71,7 +73,8 @@ import { AcceptComponent } from './requests/request-details/accept/accept.compon
     MatSortModule,
     MatCheckboxModule,
     MatSnackBarModule,
-    MatDialogModule
+    MatDialogModule,
+    MatRadioModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { PropertyService } from './services/property/property.service';
+import { SnackbarLevel, SnackbarService } from './services/snackbar/snackbar.service';
 
 export interface MenuItem {
   icon: any,
@@ -15,27 +18,33 @@ export interface MenuItem {
 export class AppComponent {
   title = 'POC';
   showFiller = false;
+  public subscription: Subscription;
 
   menuItems: MenuItem[] = [
-    { icon: 'home', text: 'Home', path: '' },
-    { icon: 'description', text: 'Anfragen', path: 'requests' },    
-    { icon: 'description', text: 'Anfrage erstellen', path: 'create-request' },
-    { icon: 'description', text: 'Meine Anfrage', path: 'my-request' },
   ]
-  constructor(private router: Router) { }
+  constructor(private router: Router, private propertryService: PropertyService, private snackbar: SnackbarService) {     
+    this.subscription = this.propertryService.getMenuItems().subscribe(menuItems => this.menuItems = menuItems);}
 
   ngOnInit()
-  {
-    var accessToken = localStorage.getItem('AccessToken');
-
+  {    
+    var accessToken = localStorage.getItem('AccessToken');   
     if(accessToken == null)
     {
-      this.router.navigate(['/login']);
+      this.router.navigate(['/login']);    
       return;
-    }
+    } else {
+      this.propertryService.updateMenuItems(accessToken)
+    }    
   }
 
-  navigate(path: string) {
-    this.router.navigate([path]);
+  async navigate(path: string) {
+    this.router.navigate([path]);    
+  }
+
+  logout() {
+    localStorage.removeItem("AccessToken");
+    this.propertryService.updateMenuItems(JSON.stringify({}))    
+    this.snackbar.open("Ausgeloggt", SnackbarLevel.INFO)
+    this.navigate('/login')
   }
 }

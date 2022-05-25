@@ -87,7 +87,7 @@ export class RequestsComponent implements AfterViewInit {
       data: request
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.snachbar.open("Nice");
+      // this.snachbar.open("Nice");
     });
   }
 }

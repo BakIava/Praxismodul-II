@@ -9,13 +9,13 @@
                     <td>
                         <mat-form-field appearance="fill">
                             <mat-label>Anfrage-ID</mat-label>
-                            <input matInput disabled [(ngModel)]="request.id" name="id">
+                            <input matInput readonly=true [(ngModel)]="request.id" name="id">
                         </mat-form-field>
                     </td>
                     <td class="right">
                         <mat-form-field appearance="fill">
                             <mat-label>Budget</mat-label>
-                            <input matInput disabled [(ngModel)]="request.budget" name="budget">
+                            <input matInput readonly=true [(ngModel)]="request.budget" name="budget">
                         </mat-form-field>
                     </td>
                 </tr>
@@ -23,7 +23,7 @@
                     <td>
                         <mat-form-field appearance="fill">
                             <mat-label>Hersteller</mat-label>
-                            <input matInput disabled [(ngModel)]="request.manufacturer" name="user">
+                            <input matInput readonly=true [(ngModel)]="request.manufacturer" name="user">
                         </mat-form-field>
                     </td>
                     <td class="right">
@@ -39,14 +39,13 @@
                     <td>
                         <mat-form-field appearance="fill">
                             <mat-label>Modell</mat-label>
-                            <input matInput disabled [(ngModel)]="request.carmodel" name="status">
+                            <input matInput readonly=true [(ngModel)]="request.carmodel" name="status">
                         </mat-form-field>
                     </td>
                     <td class="right">
                         <mat-form-field appearance="fill">
                             <mat-label>Kraftstoff</mat-label>
-                            <mat-select disabled [(ngModel)]="request.fuel" name="approver">
-                            </mat-select>
+                            <input matInput readonly=true [(ngModel)]="request.fuel" name="fuel">
                         </mat-form-field>
                     </td>
                 </tr>
@@ -54,14 +53,13 @@
                     <td>
                         <mat-form-field appearance="fill">
                             <mat-label>Neuwagen?</mat-label>
-                            <mat-select disabled [(ngModel)]="request.carState" name="carState">
-                            </mat-select>
+                            <input matInput readonly=true [(ngModel)]="request.carState" name="carState">
                         </mat-form-field>
                     </td>
                     <td class="right">
                         <mat-form-field appearance="fill">
                             <mat-label>Hubraum (cm³)</mat-label>
-                            <input matInput disabled [(ngModel)]="request.cubicCapacity" name="cubicCapacity">
+                            <input matInput readonly=true [(ngModel)]="request.cubicCapacity" name="cubicCapacity">
                         </mat-form-field>
                     </td>
                 </tr>
@@ -69,14 +67,24 @@
                     <td>
                         <div style="padding: 0px 20px 20px 10px;">
                             <p style="margin-top: 0;">Tankkarte vorhanden?</p>
-                            <mat-checkbox disabled class="example-margin">Ja</mat-checkbox>
-                            <mat-checkbox disabled class="example-margin">Nein</mat-checkbox>
+                            <mat-radio-group [(ngModel)]="request.fuelCard" name="fuelCard" disabled>
+                                <mat-radio-button [value]=true style="margin-right: 10px;">Ja</mat-radio-button>
+                                <mat-radio-button [value]=false>Nein</mat-radio-button>
+                            </mat-radio-group>
                         </div>
                     </td>
                     <td>
                         <div style="padding: 0px 20px 20px 10px;">
-                            <p style="margin-top: 0;">Angebot</p>
-                            <input disabled type="file">
+                            <input type="file" readonly=true class="file-input" #fileUpload>
+    
+                                <div class="file-upload" style="margin: 0 20px;">
+    
+                                    {{request.offer.name || "No file uploaded yet."}}
+    
+                                    <button mat-mini-fab style="background-color: white;" class="upload-btn" (click)="openFile(request.offer)">
+                                        <mat-icon>attach_file</mat-icon>
+                                    </button>
+                                </div>
                         </div>
                     </td>
                 </tr>
@@ -84,7 +92,7 @@
                     <td colspan="2">
                         <mat-form-field appearance="fill" style="width: 95%; padding-bottom: 0;">
                             <mat-label>Nachricht</mat-label>
-                            <textarea matInput disabled [(ngModel)]="request.message" name="description"></textarea>
+                            <textarea matInput readonly=true [(ngModel)]="request.message" name="description"></textarea>
                         </mat-form-field>
                     </td>
                 </tr>
@@ -97,7 +105,7 @@
                 </tr>
                 <tr style="text-align: center;">
                     <td style="padding-bottom: 15px;">
-                        <button mat-raised-button color="primary" (click)="openAccept()">Entgegennehmen</button>
+                        <button mat-raised-button color="primary" (click)="openAccept()">Genehmigen</button>
                     </td>                    
                 </tr>
                 <tr style="text-align: center; padding-bottom: 5px;">                    

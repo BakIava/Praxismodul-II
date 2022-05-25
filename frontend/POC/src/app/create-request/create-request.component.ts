@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../services/api/api.service';
-import { SnackbarService } from '../services/snackbar/snackbar.service';
+import { SnackbarLevel, SnackbarService } from '../services/snackbar/snackbar.service';
 import { Request } from '../Model/Request';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-request',
@@ -10,17 +11,20 @@ import { Request } from '../Model/Request';
 })
 export class CreateRequestComponent implements OnInit {
 
-  constructor(private api: ApiService, private snackbar: SnackbarService) { }
+  constructor(private api: ApiService, private snackbar: SnackbarService, private router: Router) { }
 
   ngOnInit() {
     this.checkRequests();
     }
 
+    requestId: any = null;
+
     async checkRequests() {
       var token = localStorage.getItem('AccessToken');
       await this.api.getRequest({Authorization: token }).then(response => {
         if(response) {
-          this.snackbar.open("User has already Request")
+          this.requestId = response.id;
+          // this.snackbar.open("User has already Request", this.snackbar.)
         }
       }).catch(error => {
 
@@ -44,11 +48,13 @@ export class CreateRequestComponent implements OnInit {
 
   async createRequest() {
     if(this.file == null) {
-      this.snackbar.open("Angebot anhängen")
+      this.snackbar.open("Angebot anhängen", SnackbarLevel.INFO)
       return;
     }
 
-    this.request.employee = localStorage.getItem("AccessToken") || "" ;
+    var user = JSON.parse(localStorage.getItem("AccessToken") || "{}");
+    
+    this.request.employee = user.displayName;
 
     await this.api.createRequest(this.request, { }).then(async response => {
       this.request.id = response;
@@ -57,7 +63,9 @@ export class CreateRequestComponent implements OnInit {
       formData.append("id", this.request.id);
       await this.api.uploadOffer(formData, {});
 
-      this.snackbar.open("Anfrage wurde unter folgender ID erstellt: " + this.request.id, "Verstanden", 10000)
+      this.snackbar.open("Anfrage wurde unter folgender ID erstellt: " + this.request.id, SnackbarLevel.SUCCESS)
+      
+      this.requestId = this.request.id;
     }).catch(error => {
       console.log(error);
     });
@@ -85,7 +93,7 @@ export class CreateRequestComponent implements OnInit {
     }
   }
 
-  test() {
-    this.snackbar.open("Test")
+  goToMyRequest() {    
+    this.router.navigate(['/my-request']);
   }
 }

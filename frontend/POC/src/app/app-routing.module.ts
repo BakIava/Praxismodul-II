@@ -6,6 +6,7 @@ import { LoginComponent } from './login/login.component';
 import { MainComponent } from './main/main.component';
 import { MyRequestComponent } from './my-request/my-request.component';
 import { RequestsComponent } from './requests/requests.component';
+import { UserRolesComponent } from './user-roles/user-roles.component';
 
 const routes: Routes = [
   {
@@ -27,6 +28,10 @@ const routes: Routes = [
   {
     path: 'my-request',
     component: MyRequestComponent
+  },
+  {
+    path:'user-roles',
+    component: UserRolesComponent
   }
 ];
 @NgModule({

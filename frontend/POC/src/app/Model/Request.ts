@@ -12,5 +12,8 @@ export class Request {
       public date: Date = new Date(),
       public fuelCard: boolean = false,
       public grossPrice: number = 100,
-      public employee: string = 'Mustermann') { }
+      public employee: string = 'Mustermann',
+      public offer: any = null,
+      public status: string = 'new',
+      public managerMsgs: string[] = []) { }
   }

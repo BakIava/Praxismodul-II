@@ -26,15 +26,20 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { HttpClientModule } from '@angular/common/http';
 import { RequestsComponent } from './requests/requests.component';
 import { MatTableModule } from '@angular/material/table';
-import {MatPaginatorModule} from '@angular/material/paginator';
-import {MatSortModule} from '@angular/material/sort';
-import {MatCheckboxModule} from '@angular/material/checkbox'; 
-import {MatSnackBarModule} from '@angular/material/snack-bar';
-import {MatDialogModule} from '@angular/material/dialog'; 
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDialogModule } from '@angular/material/dialog';
 import { RequestDetailsComponent } from './requests/request-details/request-details.component';
-import { AcceptComponent } from './requests/request-details/accept/accept.component'; 
-import {MatRadioModule} from '@angular/material/radio';
+import { AcceptComponent } from './requests/request-details/accept/accept.component';
+import { MatRadioModule } from '@angular/material/radio';
 import { MyRequestComponent } from './my-request/my-request.component';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatBadgeModule } from '@angular/material/badge';
+import { UserRolesComponent } from './user-roles/user-roles.component';
+import { CreateUserComponent } from './user-roles/create-user/create-user.component';
+
 
 
 
@@ -47,7 +52,9 @@ import { MyRequestComponent } from './my-request/my-request.component';
     RequestsComponent,
     RequestDetailsComponent,
     AcceptComponent,
-    MyRequestComponent
+    MyRequestComponent,
+    UserRolesComponent,
+    CreateUserComponent
   ],
   imports: [
     BrowserModule,
@@ -76,7 +83,9 @@ import { MyRequestComponent } from './my-request/my-request.component';
     MatCheckboxModule,
     MatSnackBarModule,
     MatDialogModule,
-    MatRadioModule
+    MatRadioModule,
+    MatProgressBarModule,
+    MatBadgeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

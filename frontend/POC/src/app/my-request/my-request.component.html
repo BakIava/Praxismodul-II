@@ -9,21 +9,21 @@
                         <td>
                             <mat-form-field appearance="fill">
                                 <mat-label>Anfrage-ID</mat-label>
-                                <input matInput disabled [(ngModel)]="request.id" name="id">
+                                <input matInput readonly=true [(ngModel)]="request.id" name="id">
                             </mat-form-field>
                         </td>
                         <td class="right">
                             <mat-form-field appearance="fill" class="budget">
                                 <mat-label>Budget</mat-label>
-                                <input class="budget-input" matInput disabled [(ngModel)]="request.budget" name="budget">
+                                <input class="budget-input" matInput readonly=true [(ngModel)]="request.budget" name="budget">
                                 <mat-icon matPrefix>euro_symbol</mat-icon>
-                                <span matSuffix style="color:rgb(7,76,113)">,00</span>
+                                <span matSuffix >,00</span>
                             </mat-form-field>
                         </td>
                         <td class="right">
                             <mat-form-field appearance="fill">
                                 <mat-label>Anschaffungsdatum</mat-label>
-                                <input matInput disabled [matDatepicker]="picker" [(ngModel)]="request.date" name="date">
+                                <input matInput readonly=true [matDatepicker]="picker" [(ngModel)]="request.date" name="date">
                                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                 <mat-datepicker touchUi #picker></mat-datepicker>
                             </mat-form-field>
@@ -33,19 +33,19 @@
                         <td>
                             <mat-form-field appearance="fill">
                                 <mat-label>Hersteller</mat-label>
-                                <input matInput disabled [(ngModel)]="request.manufacturer" name="user">
+                                <input matInput readonly=true [(ngModel)]="request.manufacturer" name="user">
                             </mat-form-field>
                         </td>
                         <td>
                             <mat-form-field appearance="fill">
                                 <mat-label>Modell</mat-label>
-                                <input matInput disabled [(ngModel)]="request.carmodel" name="status">
+                                <input matInput readonly=true [(ngModel)]="request.carmodel" name="status">
                             </mat-form-field>
                         </td>
                         <td class="right">
                             <mat-form-field appearance="fill">
                                 <mat-label>Kraftstoff</mat-label>
-                                <input matInput disabled [(ngModel)]="request.fuel" name="fuel">
+                                <input matInput readonly=true [(ngModel)]="request.fuel" name="fuel">
                                 <!-- <mat-select [(ngModel)]="request.fuel" name="approver">
                                     <mat-option *ngFor="let fuel of fuels" [value]="fuel.id">
                                         {{fuel.displayName}}
@@ -61,7 +61,7 @@
                         <td>
                             <mat-form-field appearance="fill" class="gross-price">
                                 <mat-label>Bruttolistenpreis</mat-label>
-                                <input class="gross-price-input" disabled matInput [(ngModel)]="request.grossPrice"
+                                <input class="gross-price-input" readonly=true matInput [(ngModel)]="request.grossPrice"
                                     name="grossPrice">
                                 <!-- <span matPrefix>$&nbsp;</span> -->
                                 <span matSuffix>,00</span>
@@ -71,7 +71,7 @@
                         <td>
                             <mat-form-field appearance="fill">
                                 <mat-label>Neuwagen?</mat-label>
-                                <input matInput disabled [(ngModel)]="request.carState" name="carState">
+                                <input matInput readonly=true [(ngModel)]="request.carState" name="carState">
                                 <!-- <mat-select [(ngModel)]="request.carState" name="carState">
                                     <mat-option *ngFor="let carState of carStates" [value]="carState.id">
                                         {{carState.displayName}}
@@ -82,7 +82,7 @@
                         <td class="right">
                             <mat-form-field appearance="fill">
                                 <mat-label>Hubraum</mat-label>
-                                <input matInput disabled [(ngModel)]="request.cubicCapacity" name="cubicCapacity">
+                                <input matInput readonly=true [(ngModel)]="request.cubicCapacity" name="cubicCapacity">
                                 <span matSuffix>cm³</span>
                             </mat-form-field>
                         </td>
@@ -91,7 +91,7 @@
                         <td colspan="2">
                             <section>
                                 <label style="margin: 0 15px;">Tankkarte vorhanden?</label>
-                                <mat-radio-group  disabeld [(ngModel)]="request.fuelCard" name="fuelCard">
+                                <mat-radio-group disabled [(ngModel)]="request.fuelCard" name="fuelCard">
                                     <mat-radio-button [value]=true style="margin-right: 10px;">Ja</mat-radio-button>
                                     <mat-radio-button [value]=false>Nein</mat-radio-button>
                                 </mat-radio-group>
@@ -102,13 +102,13 @@
                                 <!-- <label style="margin: 0 20px;">Angebot anhängen</label>
                                 <br>
                                 <input type="file" style="padding-left:20px;" onchange="angular.element(this).scope().fileNameChanged(this)"> -->
-                                <input type="file" disabled class="file-input" #fileUpload>
+                                <input type="file" readonly=true class="file-input" #fileUpload>
     
                                 <div class="file-upload" style="margin: 0 20px;">
     
-                                    {{fileName || "No file uploaded yet."}}
+                                    {{request.offer.name || "No file uploaded yet."}}
     
-                                    <button mat-mini-fab style="background-color: white;" class="upload-btn">
+                                    <button mat-mini-fab style="background-color: white;" class="upload-btn" (click)="openFile(request.offer)">
                                         <mat-icon>attach_file</mat-icon>
                                     </button>
                                 </div>
@@ -117,7 +117,32 @@
                     </tr>
                     <tr>
                         <td colspan="3">
-                            Status
+                            <div>
+                                <table style="width: 100%; margin-left: 0;">
+                                    <th style="width: 20%;">
+                                        Anfrage erstellt<mat-icon>done</mat-icon>
+                                    </th>
+                                    <th style="width: 20%;">
+                                        Genehmigt<mat-icon>{{status}}</mat-icon>
+                                    </th>
+                                    <th style="width: 20%;">
+                                        Angebot versendet<mat-icon>pending</mat-icon>
+                                    </th>
+                                    <th style="width: 20%;">
+                                        Bestellt<mat-icon>pending</mat-icon>
+                                    </th>
+                                    <th style="width: 20%;">
+                                        Auto zugelassen<mat-icon>pending</mat-icon>
+                                    </th>
+                                </table>
+                                <mat-progress-bar
+                                    class="example-margin"
+                                    [color]="color"
+                                    [mode]="mode"
+                                    [value]="value"
+                                    [bufferValue]="bufferValue">
+                                </mat-progress-bar>
+                            </div>
                             <!-- <mat-form-field appearance="fill" style="width: 95%">
                                 <mat-label>
                                     <mat-icon>email</mat-icon> Nachricht
@@ -130,15 +155,17 @@
             </form>
         </mat-card-content>
         <mat-card-actions style="text-align: center;">
-            <button mat-raised-button style="background-color: rgb(204, 204, 204); color: black; width: 25%; "
+            <button mat-raised-button style="background-color: rgb(204, 204, 204); color: black; width: 25%; " [matBadge]="request.managerMsgs.length" [matBadgeHidden]="request.managerMsgs.length <= 0"
                 (click)="openMessages()">Nachrichtenverlauf</button>
         </mat-card-actions>
     </mat-card>
 </div>
 <ng-template #NoRequest>
-    <mat-card>
-        <mat-card-content>
-            Es gibt keine Anfrage
+    <mat-card style="margin: 20px;">
+        <mat-card-content style="text-align: center;">
+            <img src="/assets/info.png">
+            <p style="font-size: large;">Sie haben noch keine Anfrage erstellt</p>
+            <button mat-raised-button style="background-color: grey; color:white;"  (click)="goToCreateRequest()">Anfrage erstellen</button>
         </mat-card-content>
     </mat-card>
 </ng-template>

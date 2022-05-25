@@ -1,3 +1,4 @@
+// Laden der Bibliotheken
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -23,7 +24,48 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 
-app.post('/requests', async (req, res) => {
+app.post('/auth', async (req, res) => {
+    var username = req.headers['username'];
+    var password = req.headers['password'];
+
+
+    const collectionName = 'users';
+    const collection = db.collection(collectionName);
+    var users = await collection.find({ username: username, password: password }).toArray();
+    console.log(users);
+
+    if (users.length > 0) {
+        res.statusCode = 200;
+        res.write(JSON.stringify({ role: users[0].role, displayName: users[0].displayName }));
+        res.end();
+        return
+    }
+    else {
+        res.statusCode = 401;
+        res.end();
+    }
+
+});
+
+app.get('/users', async (req, res) => {
+
+    const collectionName = 'users';
+    const collection = db.collection(collectionName);
+    var users = await collection.find({}).toArray();
+    res.statusCode = 200;
+    res.write(JSON.stringify(users));
+    res.end();
+});
+
+app.post('/users', async (req, res) => {
+    const collectionName = 'users';
+    const collection = db.collection(collectionName);
+    const result = await collection.insertOne(req.body);
+    res.statusCode = 200;
+    res.end();
+})
+
+app.post('/request', async (req, res) => {
     var request = req.body;
 
     let guid = () => {
@@ -37,6 +79,8 @@ app.post('/requests', async (req, res) => {
     }
 
     request.id = guid();
+    request.status = "open";
+    request.managerMsgs = [];
 
     const collectionName = 'requests';
     const collection = db.collection(collectionName);
@@ -49,20 +93,36 @@ app.post('/requests', async (req, res) => {
 });
 
 app.get('/request', async (req, res) => {
-    var token = req.headers['authorization'];
+    var token = JSON.parse(req.headers['authorization']);
 
-    console.log(token);
+    console.log(token.displayName);
     const collectionName = 'requests';
     const collection = db.collection(collectionName);
-    var request = await collection.find({employee: token}).toArray();
-    console.log(request);
-    res.write(JSON.stringify(request[0]))
-    res.statusCode = 200;
-    res.end();
+    var requests = await collection.find({ employee: token.displayName }).toArray();    
+    console.log(requests);
+    if (requests.length > 0) {
+        res.write(JSON.stringify(requests[0]))
+        res.statusCode = 200;
+        res.end();
+    } else {
+        res.end();
+    }
+
+})
+
+app.post('/request/update', async (req, res) => {
+    debugger;
+    const collectionName = 'requests';
+    const collection = db.collection(collectionName);
+    const requests = await collection.find({ id: req.body.id }).toArray();
+
+    const result = await collection.updateOne({ _id: requests[0]._id }, { $set: { status: req.body.status, managerMsgs: req.body.managerMsgs } });
+
+    res.status = 200;
+    res.end()
 })
 
 app.post('/offer', async (req, res) => {
-    debugger;
     try {
         if (!req.files) {
             res.send({
@@ -81,7 +141,7 @@ app.post('/offer', async (req, res) => {
                 $set: { offer: 'offer' }
             }
 
-            const result = await collection.updateOne({_id: requests[0]._id}, { $set: { offer: offer } });
+            const result = await collection.updateOne({ _id: requests[0]._id }, { $set: { offer: offer } });
 
             // offer.mv('./uploads/' + offer.name);
 
@@ -103,7 +163,6 @@ app.post('/offer', async (req, res) => {
     }
 });
 
-
 app.get('/requests', async (req, res) => {
     const collectionName = 'requests';
     const collection = db.collection(collectionName);
@@ -119,7 +178,7 @@ async function main() {
     const client = new MongoClient(dbUri);
     try {
         await client.connect();
-        db = client.db(dbName)
+        db = client.db(dbName);
     } catch (error) {
         console.log(error);
         return;

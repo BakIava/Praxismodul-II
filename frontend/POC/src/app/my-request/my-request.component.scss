@@ -1,4 +1,28 @@
 
+table {
+  width: 50%;
+  margin-left: 25%;
+}
+
+td {
+  padding: 5px;
+}
+
+mat-form-field {
+  width: 90%;
+  /* border: 2pt solid white;
+  border-radius: 5px; */
+  padding: 15px;
+  padding-bottom: 10px;
+}
+
+mat-label {
+  color: white;
+}
+
+input {
+  color: white;
+}
 
 .file-input {
     display: none;

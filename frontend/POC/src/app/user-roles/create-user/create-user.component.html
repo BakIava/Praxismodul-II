@@ -1,0 +1,42 @@
+<table>
+    <th>
+        <h2>Benutzer erstellen</h2>
+    </th>
+    <tr>
+        <td>
+            <mat-form-field appearance="fill">
+                <mat-label>Anzeigename</mat-label>
+                <input matInput [(ngModel)]="displayName">
+            </mat-form-field>
+        </td>
+        <td>
+            <mat-form-field appearance="fill">
+                <mat-label>Benutzername</mat-label>
+                <input matInput [(ngModel)]="username">
+            </mat-form-field>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <mat-form-field appearance="fill">
+                <mat-label>Passwort</mat-label>
+                <input matInput type="password" [(ngModel)]="password">
+            </mat-form-field>
+        </td>
+        <td>
+            <mat-form-field appearance="fill">
+                <mat-label>Rolle</mat-label>
+                <mat-select [(ngModel)]="selectedRole">
+                    <mat-option *ngFor="let userrole of userroles" [value]="userrole">
+                        {{userrole}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </td>
+    </tr>
+    <tfoot>
+        <td>            
+          <button mat-raised-button style="background-color: green;" (click)="createUser()">Erstellen</button>
+        </td>
+    </tfoot>
+</table>

@@ -1,18 +1,19 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 <!-- HEADER -->
-
 <mat-toolbar class="header">
-  <button class="menu-button" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu Button">
-    <mat-icon>menu</mat-icon>
-    <!-- <mat-icon>more_vert</mat-icon> -->
-  </button>
-  <mat-menu #menu="matMenu">
-    <button *ngFor="let menuItem of menuItems" mat-menu-item (click)="navigate(menuItem.path)">
-      <mat-icon>{{menuItem.icon}}</mat-icon>
-      <span>{{menuItem.text}}</span>
+  <!-- <div [hidden]="menuItems.length == 0"> -->
+    <button class="menu-button" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu Button">
+      <mat-icon>menu</mat-icon>
+      <!-- <mat-icon>more_vert</mat-icon> -->
     </button>
-  </mat-menu>
+    <mat-menu #menu="matMenu">
+      <button *ngFor="let menuItem of menuItems" mat-menu-item (click)="navigate(menuItem.path)">
+        <mat-icon>{{menuItem.icon}}</mat-icon>
+        <span>{{menuItem.text}}</span>
+      </button>
+    </mat-menu>
+  <!-- </div> -->
   <div class="spacer2"></div>
   <div class="spacer1"></div>
   <div style="background-color: white; border-radius: 20px; height: 50px; width: 50px; ">
@@ -20,12 +21,16 @@
   </div>
   <div class="spacer2"></div>
   <span>Fuhrparkmanagementsystem</span>
+  <div class="spacer1"></div>
+  <!-- <div> -->
+    <button mat-raised-button color="warn" (click)="logout()">Logout</button>
+  <!-- </div>   -->
 </mat-toolbar>
 
 <!-- CONTENT -->
 
 <div class="content" style="background-color: rgb(102, 102, 102);">
-  <router-outlet></router-outlet>
+  <router-outlet ></router-outlet>
 </div>
 
 <!-- FOOTER -->
